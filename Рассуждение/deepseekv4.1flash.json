@@ -1,0 +1,436 @@
+{
+  "info": {
+    "id": "ses_f303a7425ffenBqNmELcc4qttV",
+    "slug": "clever-harbor",
+    "projectID": "global",
+    "directory": "C:\\Users\\drono\\OneDrive\\Документы\\Default Project",
+    "path": "",
+    "summary": {
+      "additions": 0,
+      "deletions": 0,
+      "files": 0
+    },
+    "cost": 0,
+    "tokens": {
+      "input": 120023,
+      "output": 1737,
+      "reasoning": 2490,
+      "cache": {
+        "read": 5952,
+        "write": 0
+      }
+    },
+    "title": "Ревью AMX Mod X / Pawn: статистика и смена карты",
+    "agent": "plan",
+    "model": {
+      "id": "deepseek-ai/deepseek-v4.1-flash",
+      "providerID": "deepseek_",
+      "variant": "default"
+    },
+    "version": "1.18.32",
+    "time": {
+      "created": 1790192225242,
+      "updated": 1790192855464
+    }
+  },
+  "messages": [
+    {
+      "info": {
+        "id": "msg_0cfc58c040010Q01rfzCmzHKLO",
+        "sessionID": "ses_f303a7425ffenBqNmELcc4qttV",
+        "role": "user",
+        "time": {
+          "created": 1790192225296
+        },
+        "summary": {
+          "diffs": []
+        },
+        "agent": "plan",
+        "model": {
+          "providerID": "deepseek_",
+          "modelID": "deepseek-ai/deepseek-v4.1-flash"
+        }
+      },
+      "parts": [
+        {
+          "id": "prt_0cfc58c04002stXyBP0lECNQ1P",
+          "sessionID": "ses_f303a7425ffenBqNmELcc4qttV",
+          "messageID": "msg_0cfc58c040010Q01rfzCmzHKLO",
+          "type": "text",
+          "text": "Разбери этот фрагмент AMX Mod X / Pawn как code review.\r\r\nНичего не исправляй и не пиши новый код.\r\nНайди все реальные проблемы, которые могут привести к неправильной статистике, дублированию данных, потере данных или багам при смене карты/раунда.\r\n\r\nДля каждой проблемы укажи:\r\n1) в чём ошибка;\r\n2) почему она возникает;\r\n3) насколько она критична: низкая / средняя / высокая.\r\n\r\nФрагмент:\r\n\r\nnew g_PlayerStats[33]\r\nnew g_Vault\r\n\r\npublic plugin_init()\r\n{\r\n    register_logevent(\"RoundEnd\", 2, \"1=Round_End\")\r\n}\r\n\r\npublic client_putinserver(id)\r\n{\r\n    new userid = get_user_userid(id)\r\n    g_PlayerStats[id] = nvault_get(g_Vault, fmt(\"%d\", userid))\r\n}\r\n\r\npublic RoundEnd()\r\n{\r\n    for (new id = 1; id <= 32; id++)\r\n    {\r\n        if (is_user_connected(id))\r\n            SavePlayer(id)\r\n\r\n        FinalizeRound()\r\n    }\r\n}\r\n\r\npublic client_disconnect(id)\r\n{\r\n    SavePlayer(id)\r\n    g_PlayerStats[id] = 0\r\n}\r\n\r\nSavePlayer(id)\r\n{\r\n    new userid = get_user_userid(id)\r\n    nvault_set(g_Vault, fmt(\"%d\", userid), fmt(\"%d\", g_PlayerStats[id]))\r\n}"
+        }
+      ]
+    },
+    {
+      "info": {
+        "id": "msg_0cfc58c14002TS1iHBpLJHKX7p",
+        "sessionID": "ses_f303a7425ffenBqNmELcc4qttV",
+        "role": "assistant",
+        "time": {
+          "created": 1790192225300,
+          "completed": 1790192391378
+        },
+        "parentID": "msg_0cfc58c040010Q01rfzCmzHKLO",
+        "modelID": "deepseek-ai/deepseek-v4.1-flash",
+        "providerID": "deepseek_",
+        "mode": "plan",
+        "agent": "plan",
+        "path": {
+          "cwd": "C:\\Users\\drono\\OneDrive\\Документы\\Default Project",
+          "root": "C:\\Users\\drono\\OneDrive\\Документы\\Default Project"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 36324,
+          "input": 34096,
+          "output": 127,
+          "reasoning": 117,
+          "cache": {
+            "read": 1984,
+            "write": 0
+          }
+        },
+        "finish": "tool-calls"
+      },
+      "parts": [
+        {
+          "id": "prt_0cfc80caf001EmW4Pm2xXdl806",
+          "sessionID": "ses_f303a7425ffenBqNmELcc4qttV",
+          "messageID": "msg_0cfc58c14002TS1iHBpLJHKX7p",
+          "type": "step-start",
+          "snapshot": "2802a3164521b1ee80b0c634bb76a4e1ba12bc90"
+        },
+        {
+          "id": "prt_0cfc80cb00013rWubCVr9ZwBqM",
+          "sessionID": "ses_f303a7425ffenBqNmELcc4qttV",
+          "messageID": "msg_0cfc58c14002TS1iHBpLJHKX7p",
+          "type": "reasoning",
+          "text": "The user wants a code review of an AMX Mod X / Pawn fragment. This is a CS 1.6 task. Per AGENTS.md, I must first read relevant skills. This touches: storage (nvault), lifecycle-and-entities (client_putinserver, client_disconnect, round), possibly performance, amxx-api.\n\nLet me read the relevant skills. First line of response must name the skills read.\n\nLet me load: cs16-router first maybe, plus storage, lifecycle-and-entities, amxx-api, performance.\n\nI'll read them.",
+          "time": {
+            "start": 1790192389296,
+            "end": 1790192390534
+          }
+        },
+        {
+          "id": "prt_0cfc811870014iJ28BZq16h1Fn",
+          "sessionID": "ses_f303a7425ffenBqNmELcc4qttV",
+          "messageID": "msg_0cfc58c14002TS1iHBpLJHKX7p",
+          "type": "text",
+          "text": "\n\n<｜DSML｜ calls>\n",
+          "time": {
+            "start": 1790192390535,
+            "end": 1790192391215
+          }
+        },
+        {
+          "id": "prt_0cfc811c6001bVaI5LQNnMSRf7",
+          "sessionID": "ses_f303a7425ffenBqNmELcc4qttV",
+          "messageID": "msg_0cfc58c14002TS1iHBpLJHKX7p",
+          "type": "tool",
+          "callID": "chatcmpl-tool-923db6b9240e1225",
+          "tool": "skill",
+          "state": {
+            "status": "completed",
+            "input": {
+              "name": "cs16-router"
+            },
+            "output": "<skill_content name=\"cs16-router\">\n# Skill: cs16-router\n\n# Как выбирать скиллы\n\nСтек: HLDS 8684, ReHLDS 3.15.0.896, ReGameDLL 5.30.0.814, Metamod-R 1.3.0.149, AMX Mod X 1.10.0.5484, ReAPI 5.29.0.358. Все скиллы набора проверены на этих версиях. Если в папке сервера версии другие — сверяйся с её файлами, а не с текстом скиллов.\n\nЭто входная точка набора. Она не содержит правил о коде — она говорит, какие правила прочитать перед работой.\n\n## Обязательное правило\n\nПеред любой работой по CS 1.6 открыть таблицу «задача → скилл» в файле AGENTS.md в корне проекта и прочитать все скиллы, подходящие к задаче. Если задача задевает несколько тем — прочитать все.\n\nНе считать знание API из памяти заменой чтению скилла. Скилл загружается в текущей задаче, а не «когда-то раньше».\n\n## Порядок\n\nНовая функциональность:\n\n1. скиллы по темам задачи (таблица в AGENTS.md);\n2. `amxx-api`, если в задаче есть вызовы функций AMXX;\n3. `build` перед сборкой;\n4. `diagnostics-and-method`, если что-то не заработало.\n5. `zombie-plague`, если сервер/проект работает на Zombie Plague 5.0.8a (см. `STACK.md`), а плагин меняет разделяемое с ZP игровое состояние игрока — оружие, здоровье, скорость, модель, спавн, урон — даже когда сам плагин не использует `zp50_*`. Цель — только проверка совместимости с ролями ZP (`zp_core_is_zombie`, опциональная зависимость через `LibraryExists`). Чистые UI-меню без изменения состояния, админские/информационные и map/config/tooling-плагины под этот пункт не подпадают.\n\nРазбор сбоя:\n\n1. `diagnostics-and-method`;\n2. скиллы по темам, которых касается сбой;\n3. `amxx-api`, если сбой в вызове функции.\n\n## Версии\n\nЕсли задача затрагивает версии, API, совместимость, сборку, зависящую от версии, или обновление/понижение компонентов — прочитать `STACK.md` в корне проекта по правилам раздела версий AGENTS.md. На обычные задачи, где версия ни на что не влияет, `STACK.md` не читать.\n\n## Короткий запрос\n\nПользователь пишет по-бытовому: «хочу меню ножей», «сделай магазин», «сервер падает». Технические подробности он не пишет, и требовать их нельзя — разобрать формулировку на темы обязан агент.\n\n1. Найти запрос в таблице простых фраз в AGENTS.md.\n2. Если фразы нет — разложить её на темы и взять все подходящие скиллы.\n3. Назвать прочитанные скиллы в ответе до первой строки кода.\n\n## Чего не делать\n\n- Не пропускать скилл потому, что тема уже упоминалась в разговоре.\n- Не пропускать скилл потому, что задача выглядит маленькой.\n- Не пропускать скилл потому, что реализацию можно написать сразу.\n- Не загружать скиллы, не относящиеся к задаче: набор берётся по минимуму, но ничего подходящего не выбрасывается.\n\n- Не ограничиваться общими скиллами, когда в таблице есть скилл по предметной области. Задача про зомби — это не только прекэш и сущности: `zombie-plague` обязателен.\n\n## Проверка перед выдачей кода\n\n1. Названы скиллы, которые прочитаны для этой задачи.\n2. Для каждого названного скилла видно, какое его правило применено в коде.\n3. Не выдумывать факт чтения скилла, если он не читался. *(доказательство: не применимо)*\n\nBase directory for this skill: C:\\Users\\drono\\OneDrive\\Документы\\Default Project\\.agents\\skills\\cs16-router\nRelative paths in this skill (e.g., scripts/, reference/) are relative to this base directory.\nNote: file list is sampled.\n\n<skill_files>\n<file>C:\\Users\\drono\\OneDrive\\Документы\\Default Project\\.agents\\skills\\cs16-router\\references\\evidence.md</file>\n</skill_files>\n</skill_content>",
+            "title": "Loaded skill: cs16-router",
+            "metadata": {
+              "name": "cs16-router",
+              "dir": "C:\\Users\\drono\\OneDrive\\Документы\\Default Project\\.agents\\skills\\cs16-router",
+              "truncated": false
+            },
+            "time": {
+              "start": 1790192390731,
+              "end": 1790192390749
+            }
+          }
+        },
+        {
+          "id": "prt_0cfc81268001e8Cd4lMZQUMblo",
+          "sessionID": "ses_f303a7425ffenBqNmELcc4qttV",
+          "messageID": "msg_0cfc58c14002TS1iHBpLJHKX7p",
+          "type": "tool",
+          "callID": "chatcmpl-tool-ba39caa1e74680e0",
+          "tool": "skill",
+          "state": {
+            "status": "completed",
+            "input": {
+              "name": "storage"
+            },
+            "output": "<skill_content name=\"storage\">\n# Skill: storage\n\n# Хранение данных\n\nСтек: HLDS 8684, ReHLDS 3.15.0.896, ReGameDLL 5.30.0.814, Metamod-R 1.3.0.149, AMX Mod X 1.10.0.5484, ReAPI 5.29.0.358. Правила проверены на этих версиях. Если в папке сервера версии другие — сверяйся с её файлами, а не с этим текстом. Пометка в скобках у правила говорит, чем оно подтверждено; искать по ней ничего не нужно. Полная таблица проверок — в `references/evidence.md`.\n\n## Когда применять\n\n- сохранение статистики, настроек, прогресса\n- nvault или база данных\n- асинхронные запросы и передача данных в ответ\n\n## Когда не применять\n\n- прекэш\n- сущности и меню\n- безопасность команд\n- стоимость форвардов\n- сборка\n\n## Жёсткие запреты\n\nНарушение любого пункта либо убивает сервер, либо тихо портит данные.\n\n1. **Не полагаться на номер игрока между отправкой запроса и ответом** *(доказательство: чтение исходников на пине)*\n2. **Синхронный SQL использовать только для мелких операций при старте** — Он блокирует сервер. *(доказательство: чтение исходников на пине)*\n3. **Имя vault — короткий литерал: никогда не из конфига, не из переменной, не от игрока** — Имя попадает в sprintf в буфер 255 байт. *(доказательство: чтение исходников на пине)*\n\n## Как делать правильно\n\n1. **Длину ключа и значения nvault проверять самому** — Ключ не длиннее 255 байт, значение не длиннее 65 535. Модуль не проверяет, а длина ключа молча приводится к одному байту. *(доказательство: чтение исходников на пине)*\n2. **Имя vault держать коротким литералом в коде** — Оно попадает в sprintf в буфер 255 байт. *(доказательство: чтение исходников на пине)*\n3. **В SQL_ThreadQuery проверять всё, что пришло снаружи** — Игрок мог выйти, карта смениться; нужное передавать через data[]. *(доказательство: чтение исходников на пине)*\n4. **Выбор SQL-сервера определять по версии клиентской библиотеки внутри mysqlx** — Не по тому, что «сейчас принято ставить». *(доказательство: чтение исходников на пине)*\n5. **Для новых плагинов предпочитать штатный `json.inc` вместо ручной сборки строк** — В AMXX 1.10 это 58 нативов: `json_parse` (строка или файл), `json_validate` против схемы, `json_serial_to_file`, доступ по точкам, `json_deep_copy`. Оригинальный ZP 5.0.8a так не делает — это путь для нового кода, а не повод переписывать baseline. *(доказательство: чтение заголовков на пине)*\n\n## Что проверять и помнить\n\n1. **nvault закрывать явно только если файл нужен сразу** — Модуль сохраняется при выгрузке плагинов, то есть при смене карты. *(доказательство: чтение исходников на пине)*\n\n## Проверка перед выдачей кода\n\n1. Сборка: `0 errors, 0 warnings`, `debug >= 1` (без `-d0`).\n2. Ни одно правило из раздела «Жёсткие запреты» не нарушено.\n3. У каждого правила, попавшего в код, есть источник в этом файле.\n\nBase directory for this skill: C:\\Users\\drono\\OneDrive\\Документы\\Default Project\\.agents\\skills\\storage\nRelative paths in this skill (e.g., scripts/, reference/) are relative to this base directory.\nNote: file list is sampled.\n\n<skill_files>\n<file>C:\\Users\\drono\\OneDrive\\Документы\\Default Project\\.agents\\skills\\storage\\references\\evidence.md</file>\n</skill_files>\n</skill_content>",
+            "title": "Loaded skill: storage",
+            "metadata": {
+              "name": "storage",
+              "dir": "C:\\Users\\drono\\OneDrive\\Документы\\Default Project\\.agents\\skills\\storage",
+              "truncated": false
+            },
+            "time": {
+              "start": 1790192390861,
+              "end": 1790192390878
+            }
+          }
+        },
+        {
+          "id": "prt_0cfc812ed001KPg3Hk8eRbPPUc",
+          "sessionID": "ses_f303a7425ffenBqNmELcc4qttV",
+          "messageID": "msg_0cfc58c14002TS1iHBpLJHKX7p",
+          "type": "tool",
+          "callID": "chatcmpl-tool-95a7d8ffab92a21d",
+          "tool": "skill",
+          "state": {
+            "status": "completed",
+            "input": {
+              "name": "lifecycle-and-entities"
+            },
+            "output": "<skill_content name=\"lifecycle-and-entities\">\n# Skill: lifecycle-and-entities\n\n# Жизненный цикл, сущности и меню\n\nСтек: HLDS 8684, ReHLDS 3.15.0.896, ReGameDLL 5.30.0.814, Metamod-R 1.3.0.149, AMX Mod X 1.10.0.5484, ReAPI 5.29.0.358. Правила проверены на этих версиях. Если в папке сервера версии другие — сверяйся с её файлами, а не с этим текстом. Пометка в скобках у правила говорит, чем оно подтверждено; искать по ней ничего не нужно. Полная таблица проверок — в `references/evidence.md`.\n\n## Когда применять\n\n- состояние игрока, сброс и сохранение между раундами и картами\n- проверка и хранение ссылок на сущности\n- показ, обработка и закрытие меню\n- задачи, привязанные к игроку\n\n## Когда не применять\n\n- прекэш ресурсов\n- хранение данных на диск\n- безопасность команд\n- стоимость форвардов\n- сборка\n\n## Жёсткие запреты\n\nНарушение любого пункта либо убивает сервер, либо тихо портит данные.\n\n1. **Не хранить индекс сущности между кадрами, а если хранится — сравнивать serial** *(доказательство: чтение исходников на пине)*\n2. **Не обращаться к хендлу меню после menu_destroy** — Хендл меню переиспользуется. *(доказательство: чтение исходников на пине)*\n3. **Не перерисовывать меню из обработчика закрытия** — После 10 итераций показ отменяется с ошибкой. *(доказательство: чтение исходников на пине)*\n4. **Игрока не удалять через remove_entity** — Натив отказывается удалять id <= maxClients с ошибкой Entity %d can not be removed. *(доказательство: чтение исходников на пине)*\n5. **Не рассчитывать, что AMXX почистит массивы плагина** — AMXX приводит в порядок только свою структуру: массивов плагина он не знает и не чистит. *(доказательство: чтение исходников на пине)*\n6. **Не показывать меню вышедшему игроку** — Это ошибка, а не тихий отказ. *(доказательство: чтение исходников на пине)*\n\n## Как делать правильно\n\n1. **Сбрасывать состояние игрока в client_disconnected, а не только инициализировать в client_putinserver** — Номер игрока — это индекс, а не личность: движок отдаёт освободившийся слот следующему вошедшему, и массив вида new g_x[33] хранит данные прошлого владельца. Проверять надо «это данные того же игрока?». *(доказательство: замер на живом сервере)*\n2. **Данные игрока читать в client_disconnected** — В client_remove слот уже очищен. *(доказательство: чтение исходников на пине)*\n3. **Задачи с id игрока снимать вручную** — AMXX этого не делает. *(доказательство: чтение исходников на пине)*\n4. **Всё, что должно пережить карту, сохранять до plugin_end** *(доказательство: чтение исходников на пине)*\n5. **Бота и человека различать через is_user_bot, а не по факту форварда** *(доказательство: чтение исходников на пине)*\n6. **Любое значение меню, сущности или задачи, полученное раньше, проверять перед использованием** — Индекс переиспользуется, и данные прошлого владельца остаются в массиве, пока плагин их не сбросит. *(доказательство: чтение исходников на пине)*\n7. **Индекс сущности не считать идентификатором: хранить пару (индекс, pev_serial)** — pev_serial возвращает edict_t::serialnumber, уникальный номер при создании сущности. Это единственный способ отличить «тот же индекс, но другая сущность». *(доказательство: чтение исходников на пине)*\n8. **Перед ExecuteHam и ExecuteHamB проверять индекс в том же кадре** — На освобождённом индексе это падение, а не запись в лог. Дефект найден разбором кода движка. *(доказательство: чтение исходников на пине)*\n9. **У pev_valid проверять «не 0», а не «равно 1»** — Нормальная сущность даёт 2 (есть pvPrivateData); 1 — валидна, но без private data. *(доказательство: чтение исходников на пине)*\n10. **pdata читать только по offset из gamedata** — Неверный положительный offset не ловится. *(доказательство: чтение исходников на пине)*\n11. **Своё состояние меню чистить самому: при смене карты меню уничтожаются молча** — Обработчик при этом не вызывается. *(доказательство: чтение исходников на пине)*\n12. **В обработчике меню проверять, что игрок в игре** — Обработчик вызывается и при отключении игрока. *(доказательство: чтение исходников на пине)*\n13. **Повторный показ меню делать новым menu_display** — Внутри обработчика считается, что меню уже не открыто. *(доказательство: чтение исходников на пине)*\n14. **У legacy show_menu держать время -1 или не больше 127** — Иначе значение обрежется до байта. *(доказательство: чтение исходников на пине)*\n15. **В обработчике нового меню возвращать PLUGIN_HANDLED** — Документация newmenus.inc:113-115 советует всегда возвращать PLUGIN_HANDLED; ret & 2 даёт MRES_SUPERCEDE, ret & 1 даёт немедленный возврат. *(доказательство: чтение исходников на пине)*\n\n## Что проверять и помнить\n\n1. **Помнить, что индекс 0 — это мир, а не «пусто»** — pev_valid(0) даёт 2, is_valid_ent(0) даёт 0. *(доказательство: чтение исходников на пине)*\n2. **Проверять по логу, что ветка с hookchain работает: при строке про disabled плагин, полагающийся на client_disconnected, молча не сработает** — На нашей базе ReHLDS есть, значит ветка работает, но состояние надо проверять по логу. *(доказательство: чтение исходников на пине)*\n3. **Помнить, что сущности не принадлежат плагину: все они умирают при смене карты, а индексы переиспользуются** — Хранить индекс дольше одного кадра можно только вместе с проверкой is_valid_ent. *(доказательство: чтение исходников на пине)*\n\n## Проверка перед выдачей кода\n\n1. Сборка: `0 errors, 0 warnings`, `debug >= 1` (без `-d0`).\n2. Ни одно правило из раздела «Жёсткие запреты» не нарушено.\n3. У каждого правила, попавшего в код, есть источник в этом файле.\n\nBase directory for this skill: C:\\Users\\drono\\OneDrive\\Документы\\Default Project\\.agents\\skills\\lifecycle-and-entities\nRelative paths in this skill (e.g., scripts/, reference/) are relative to this base directory.\nNote: file list is sampled.\n\n<skill_files>\n<file>C:\\Users\\drono\\OneDrive\\Документы\\Default Project\\.agents\\skills\\lifecycle-and-entities\\references\\evidence.md</file>\n</skill_files>\n</skill_content>",
+            "title": "Loaded skill: lifecycle-and-entities",
+            "metadata": {
+              "name": "lifecycle-and-entities",
+              "dir": "C:\\Users\\drono\\OneDrive\\Документы\\Default Project\\.agents\\skills\\lifecycle-and-entities",
+              "truncated": false
+            },
+            "time": {
+              "start": 1790192391021,
+              "end": 1790192391045
+            }
+          }
+        },
+        {
+          "id": "prt_0cfc813ac001S2aqZjh9YP6PB4",
+          "sessionID": "ses_f303a7425ffenBqNmELcc4qttV",
+          "messageID": "msg_0cfc58c14002TS1iHBpLJHKX7p",
+          "type": "tool",
+          "callID": "chatcmpl-tool-b08b35e3f757962d",
+          "tool": "skill",
+          "state": {
+            "status": "completed",
+            "input": {
+              "name": "amxx-api"
+            },
+            "output": "<skill_content name=\"amxx-api\">\n# Skill: amxx-api\n\n# Поверхность API AMX Mod X\n\nСтек: HLDS 8684, ReHLDS 3.15.0.896, ReGameDLL 5.30.0.814, Metamod-R 1.3.0.149, AMX Mod X 1.10.0.5484, ReAPI 5.29.0.358. Правила проверены на этих версиях. Если в папке сервера версии другие — сверяйся с её файлами, а не с этим текстом. Пометка в скобках у правила говорит, чем оно подтверждено; искать по ней ничего не нужно. Полная таблица проверок — в `references/evidence.md`.\n\n## Когда применять\n\n- выбор функции AMXX для задачи\n- перенос кода из SA-MP или open.mp\n- ошибка компилятора про неизвестную или неверную функцию\n- вопрос «есть ли в AMXX такая функция»\n\n## Когда не применять\n\n- флаги и вывод компилятора\n- прекэш и бюджет ресурсов\n- состояние игрока, сущности, меню\n- права и клиентский ввод\n- хранение данных\n\n## Жёсткие запреты\n\n1. **Не использовать 13 объявлений с `#pragma deprecated` в заголовках AMXX 1.10.0.5484** — Компилятор помечает их предупреждением, но не ошибкой, поэтому они тихо живут в коде. Список прочитан прямо в дереве заголовков на пине, шесть файлов. *(доказательство: чтение исходников на пине)*\n\n| Устаревшее | Где | Чем заменяется |\n| --- | --- | --- |\n| `socket_change` | `sockets.inc` | `socket_is_readable()` |\n| `client_disconnect` | `amxmodx.inc` | `client_disconnected()` |\n| `md5` | `amxmodx.inc` | `hash_string()` |\n| `md5_file` | `amxmodx.inc` | `hash_file()` |\n| `plugin_modules` | `amxmodx.inc` | не нужен: модули подключает компилятор |\n| `require_module` | `amxmodx.inc` | не нужен: ничего не делает |\n| `is_amd64_server` | `amxmodx.inc` | не нужен: всегда 0 |\n| `geoip_code2` | `geoip.inc` | `geoip_code2_ex()` |\n| `geoip_code3` | `geoip.inc` | `geoip_code3_ex()` |\n| `geoip_country` | `geoip.inc` | `geoip_country_ex()` |\n| `ns_takedamage` | `ns.inc` | HamSandwich |\n| `get_customdir` | `amxmisc.inc` | `get_configsdir()` |\n| `strbreak` | `string_stocks.inc` | `argbreak()` |\n\nПометки `@deprecated` в комментарии без `#pragma` в этот счёт не входят: пять констант меню в `newmenus.inc:90-97` (`MEXIT_NORMAL`, `MENUPAD_NONE`, `MENUPAD_PAGE`, `MPROP_ORDER`, `MPROP_PADMENU`) и natives стиля 1 (`amxmodx.inc:2696`, `:2747`). Они тоже не используются, но компилятор о них молчит. *(доказательство: чтение исходников на пине)*\n\n2. **Не переносить приёмы из SA-MP и open.mp в код AMXX** — Это другая платформа и другой набор функций. В AMXX 1.10 нет `foreach`, нет `mysql_format`, нет `y_hooks`, нет `SendClientMessage`, нет `GetPlayerPoolSize`, нет `OnPlayerUpdate`. Проверено по дереву заголовков: файла `foreach.inc` в поставке нет вообще, а для базы данных есть только `sqlx.inc`. Код, написанный по гайдам SA-MP, в AMXX не соберётся. *(доказательство: чтение исходников на пине)*\n\n## Как делать правильно\n\n1. **Перед использованием незнакомой функции искать её в дереве заголовков на пине** — 66 файлов `.inc` в `addons/amxmodx/scripting/include` — это точная поверхность API закреплённой сборки. Поиск по имени даёт ответ быстрее и надёжнее, чем память или форум. *(доказательство: чтение исходников на пине)*\n2. **Проверять сигнатуру и возвращаемое значение по заголовку, а не по примеру из интернета** — Пример мог быть написан для другой сборки. *(доказательство: чтение исходников на пине)*\n3. **`create_cvar` предпочитать, когда нужны описание и границы значения** — Он даёт то же самое плюс описание, минимум и максимум, и эти сведения попадают в конфиг AMXX. *(доказательство: чтение исходников на пине)*\n4. **Помнить, что `register_cvar` помечен устаревшим в комментарии, а не компилятором** — В `cvars.inc:72` у него стоит `@note Deprecated. Consider to use create_cvar for more options.`, но `#pragma deprecated` у него нет: предупреждения компилятор не даёт, и сам AMXX использует его в `amxmisc.inc`. Новый код писать на `create_cvar`, уже написанный вызов `register_cvar` ошибкой не является. *(доказательство: чтение исходников на пине)*\n5. **Для базы данных использовать только `sqlx`** — В закреплённой сборке есть `sqlx.inc` и нет никакого `mysql_*`. Асинхронный запрос — `SQL_ThreadQuery`, обработчик выполняется на главном потоке. *(доказательство: чтение исходников на пине)*\n6. **Перед `ArrayGetCell`, `ArrayGetString` и записью по индексу проверять `ArraySize` и границы** — Пустой массив или индекс вне диапазона даёт runtime error 10. На рабочей ZP-сборке это уже произошло с ambience при пустом списке режимов. *(доказательство: чтение исходников на пине; лог живого сервера)*\n7. **Перед ручным парсером проверить штатные `textparse_ini.inc`, `textparse_smc.inc` и `json.inc`** — На пине есть 7 INI-, 8 SMC- и 58 JSON-нативов. Для нового плагина использовать штатный парсер, если формат ему соответствует; исходный парсер ZP 5.0.8a не переписывать ради «модернизации». *(доказательство: чтение исходников на пине; решение проекта не менять оригинал ZP)*\n8. **Для новых плагинов сначала проверять специализированные заголовки** — `gameconfig.inc` даёт 6 нативов для offsets/keys/addresses вместо сырых чисел, `datapack.inc` — 12 нативов для передачи данных через задачи и форварды, `xs.inc` — 95 готовых стоков строк и массивов. Не писать дублирующий код, пока нужная операция уже есть на пине. *(доказательство: чтение исходников на пине)*\n9. **Не определять `MEMBER_UNSAFE` перед `#include <reapi>`** — Без него `get_member` и `set_member` разворачиваются в безопасные `_s`-версии; макрос явно отключает эти проверки. *(доказательство: чтение исходников ReAPI 5.29.0.358)*\n10. **Не превращать выбор API в слепую лестницу `register_event → Ham → ReAPI`** — Сначала использовать публичный native/forward самого мода; для наблюдения за сетевым событием подходит `register_event`; для функции GameDLL/engine с прямой цепочкой — ReAPI; Ham нужен там, где прямой цепочки нет. У ZP прямой эквивалент ReAPI есть у 87 из 102 Ham-регистраций, но `Ham_Touch`, `Ham_Use` и `Ham_Think` (15 регистраций) полного эквивалента не имеют. *(доказательство: чтение исходников ZP 5.0.8a и ReAPI 5.29.0.358)*\n11. **До кода с ReAPI подтверждать модуль командой `amxx modules`** — Наличие `reapi_amxx.dll` и строки в `modules.ini` не доказывает загрузку. **Подтверждено живым сервером 20.09.2026:** `12 modules, 12 correct`, `ReAPI 5.29.0.359 Asmodai & s1lent running`, источник `pl1` — модуль поднялся автоматически, потому что его требует плагин. Строка версии — `v5.29.0.359-dev`, хотя релиз помечен `5.29.0.358`: номер берётся сборкой из счётчика коммитов, поэтому версию подтверждать выводом модуля, а не именем архива. *(доказательство: замер на живом сервере)*\n12. **Из ReZombie брать только архитектурные идеи, не код** — Полезны три слоя (API → общее ядро → контент), объекты на хендлах, свойства через enum и пары `_pre`/`_post`. Различать источники: архитектурные идеи — `fl0werD/rezombie` и `fl0werD/rezombieplague`; у `fl0werD/rezombieplague` лицензии нет, поэтому его код брать нельзя. API ReZombiePlague не объявляет `register_library`, `LibraryExists` и `#pragma reqlib`; в новом ядре этот контракт зависимости надо добавить, а не копировать отсутствие проверки. *(доказательство: чтение исходников ReZombiePlague; лицензия не найдена)*\n\n## Проверка перед выдачей кода\n\n1. Сборка: `0 errors, 0 warnings`, `debug >= 1` (без `-d0`).\n2. Ни одно объявление из таблицы выше в коде не используется.\n3. Ни одна функция из списка «чего нет в AMXX» в коде не используется.\n4. Каждый вызов незнакомой функции сверен с заголовком на пине.\n\nBase directory for this skill: C:\\Users\\drono\\OneDrive\\Документы\\Default Project\\.agents\\skills\\amxx-api\nRelative paths in this skill (e.g., scripts/, reference/) are relative to this base directory.\nNote: file list is sampled.\n\n<skill_files>\n<file>C:\\Users\\drono\\OneDrive\\Документы\\Default Project\\.agents\\skills\\amxx-api\\references\\evidence.md</file>\n</skill_files>\n</skill_content>",
+            "title": "Loaded skill: amxx-api",
+            "metadata": {
+              "name": "amxx-api",
+              "dir": "C:\\Users\\drono\\OneDrive\\Документы\\Default Project\\.agents\\skills\\amxx-api",
+              "truncated": false
+            },
+            "time": {
+              "start": 1790192391181,
+              "end": 1790192391198
+            }
+          }
+        },
+        {
+          "id": "prt_0cfc81485001aF7QveDDZYoz5O",
+          "sessionID": "ses_f303a7425ffenBqNmELcc4qttV",
+          "messageID": "msg_0cfc58c14002TS1iHBpLJHKX7p",
+          "type": "step-finish",
+          "reason": "tool-calls",
+          "snapshot": "2802a3164521b1ee80b0c634bb76a4e1ba12bc90",
+          "cost": 0,
+          "tokens": {
+            "total": 36324,
+            "input": 34096,
+            "output": 127,
+            "reasoning": 117,
+            "cache": {
+              "read": 1984,
+              "write": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "id": "msg_0cfc814d3002Hd6R4QeFlbSbx0",
+        "sessionID": "ses_f303a7425ffenBqNmELcc4qttV",
+        "role": "assistant",
+        "time": {
+          "created": 1790192391379,
+          "completed": 1790192619901
+        },
+        "parentID": "msg_0cfc58c040010Q01rfzCmzHKLO",
+        "modelID": "deepseek-ai/deepseek-v4.1-flash",
+        "providerID": "deepseek_",
+        "mode": "plan",
+        "agent": "plan",
+        "path": {
+          "cwd": "C:\\Users\\drono\\OneDrive\\Документы\\Default Project",
+          "root": "C:\\Users\\drono\\OneDrive\\Документы\\Default Project"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 45428,
+          "input": 41100,
+          "output": 38,
+          "reasoning": 2306,
+          "cache": {
+            "read": 1984,
+            "write": 0
+          }
+        },
+        "finish": "tool-calls"
+      },
+      "parts": [
+        {
+          "id": "prt_0cfca2114001pdLgBhk1mnV7BE",
+          "sessionID": "ses_f303a7425ffenBqNmELcc4qttV",
+          "messageID": "msg_0cfc814d3002Hd6R4QeFlbSbx0",
+          "type": "step-start",
+          "snapshot": "2802a3164521b1ee80b0c634bb76a4e1ba12bc90"
+        },
+        {
+          "id": "prt_0cfca2115001A0NUYEDEdWMawY",
+          "sessionID": "ses_f303a7425ffenBqNmELcc4qttV",
+          "messageID": "msg_0cfc814d3002Hd6R4QeFlbSbx0",
+          "type": "reasoning",
+          "text": "This is a code review, no code changes. Plan mode active — read only. Let me analyze the fragment thoroughly.\n\nSkills read: cs16-router, storage, lifecycle-and-entities, amxx-api. Possibly performance too, since nvault sync calls in a loop. Let me consider reading performance. The task is review-only. I'll include performance analysis. Let me read performance skill quickly? It's about hooks/tasks. The RoundEnd loop with nvault_set sync is storage-related. Probably fine. But to be safe and compliant, performance could be relevant because SavePlayer called in a loop at round end. Let me read it.\n\nActually let me focus. The fragment:\n\n```\nnew g_PlayerStats[33]\nnew g_Vault\n\npublic plugin_init()\n{\n    register_logevent(\"RoundEnd\", 2, \"1=Round_End\")\n}\n\npublic client_putinserver(id)\n{\n    new userid = get_user_userid(id)\n    g_PlayerStats[id] = nvault_get(g_Vault, fmt(\"%d\", userid))\n}\n\npublic RoundEnd()\n{\n    for (new id = 1; id <= 32; id++)\n    {\n        if (is_user_connected(id))\n            SavePlayer(id)\n\n        FinalizeRound()\n    }\n}\n\npublic client_disconnect(id)\n{\n    SavePlayer(id)\n    g_PlayerStats[id] = 0\n}\n\nSavePlayer(id)\n{\n    new userid = get_user_userid(id)\n    nvault_set(g_Vault, fmt(\"%d\", userid), fmt(\"%d\", g_PlayerStats[id]))\n}\n```\n\nProblems:\n\n1. `g_Vault` never opened — no `nvault_open` in plugin_init. So g_Vault = 0, all nvault_get/set fail. Critical.\n\n2. `client_putinserver` reads from vault but data loaded by userid; userid is per-connection, not persistent identity. get_user_userid returns engine user id (unique per connect within map, increments). Using it as a persistent key means stats don't survive reconnects/map changes. Actually userid is a session id, not SteamID. Across map change, userids may reset. So keying stats by userid is wrong — stats won't be tied to the actual player. This is a critical bug (identity). Should use authid (SteamID) or name.\n\n3. `client_disconnect` is deprecated (amxx-api) → should use `client_disconnected`. Also, in client_disconnect forward, is get_user_userid still valid? In client_disconnect the user is still connected, userid valid. But deprecated. Actually lifecycle skill: data читать в client_disconnected. Using deprecated declaration.\n\nActually more importantly: in client_disconnect, get_user_userid might already be invalidated? The lifecycle skill says \"Данные игрока читать в client_disconnected — В client_remove слот уже очищен.\" So client_disconnect might be before client_remove... Actually client_disconnect fires in client_disconnect (when player disconnects) vs client_remove. The deprecated one is client_disconnect. Hmm.\n\n4. `RoundEnd` — `FinalizeRound()` is called inside the loop, 32 times. It should be called once after the loop. This is a clear bug — duplicated finalize logic per connected player. Medium-high.\n\n5. RoundEnd only calls SavePlayer for connected players. Players who disconnected are saved in client_disconnect. OK. But `is_user_connected(id)` — at Round_End, might be true. Fine. But there's a subtlety: bots. Bots get putinserver too. Not a big deal.\n\n6. `SavePlayer` doesn't check if player is valid/connected. Called from client_disconnect. get_user_userid(id) on a disconnecting player — in client_disconnect the userid should still be available? Need to verify. Actually player data should be read in client_disconnected per skill. If called in client_disconnect. Hmm.\n\n7. State not reset on map change / plugin_end: g_PlayerStats saved at RoundEnd and disconnect. But if a player is still connected when map changes, plugin_end (map change) destroys plugin; values in memory lost and not saved unless round ended. The `client_disconnect` is not called on map change for connected players? Actually on map change, client_disconnect IS called for players? Let me think. On map change, players are not disconnected; they stay connected. So their stats in memory are lost when plugin reloads at map change. Need save at plugin_end. Rule: \"Всё, что должно пережить карту, сохранять до plugin_end\". So map change loses unsaved stats. High.\n\nActually also plugin re-init: g_PlayerStats array reset to 0 at new map, and client_putinserver is called again on map change? On map change, client_putinserver is NOT called again for players who remain connected (they don't reconnect). Actually... in CS, on map change players transition, putinserver is not called. So their in-memory stats reset to 0 and no reload. Then stats lost. High.\n\n8. g_PlayerStats[id] = nvault_get returns int. nvault_get returns value as integer. OK for numbers. But if storing string values later, fine.\n\n9. `fmt` — is `fmt` a stock in AMXX? Yes, fmt is in string_stocks / xs? Actually `fmt` is a stock in string.inc (format). It's fine, returns formatted string. OK.\n\n10. nvault key length: key is userid, short. Fine. But storage rule: check key/value length. Not an issue here.\n\n11. `SavePlayer` missing `public` — declared without public. AMXX forward functions need public; but client_disconnect and RoundEnd must be public. SavePlayer is a normal function called internally, so no public needed. That's fine, not a bug. But the forward declarations: `client_putinserver`, `RoundEnd`, `client_disconnect` are public. Fine.\n\n12. `g_PlayerStats[33]` and loop id 1..32 — correct (MAX_PLAYERS 32).\n\n13. `RoundEnd` register_logevent with \"1=Round_End\" — fires every round end. Fine. But FinalizeRound inside loop — bug.\n\n14. Race: RoundEnd calls SavePlayer, then client_disconnect also calls SavePlayer. Duplicate save, not necessarily harmful. But double-save of same value.\n\n15. nvault_set is synchronous file I/O — writing on every round end and every disconnect. Performance concern: sync nvault writes in a loop of 32 at every round end can hitch. Medium.\n\n16. Missing nvault_close — not required (storage rule says only close if needed immediately).\n\n17. client_putinserver: reading stats for userid, but data may be from a different player due to userid reuse? Actually nvault_get keyed by userid. Between maps, userid numbering may continue or reset. The bigger issue is userid isn't stable identity.\n\nLet me confirm get_user_userid semantics. get_user_userid returns user id which is the unique id of the client for that connection — increments per connection, but resets each map? In HLDS, player userid is engine-assigned and increments. It's not persistent across map changes. So keys collide/wrong.\n\nAlso key concern: same SteamID reconnecting gets new userid → old stats orphaned, new stats start at 0 (nvault_get returns 0 for nonexistent). Data loss.\n\n18. On client_disconnect: `SavePlayer(id)` then reset. But if get_user_userid returns 0 after disconnect (user removed), the save writes to key \"0\" — data loss plus corruption of key \"0\". Need to verify timing. This is why skill says read in client_disconnected (not client_remove). client_disconnect is before remove so probably still valid, but the deprecated issue stands. Hmm, but there may be a real risk.\n\nLet me also note g_Vault never initialized -> everything is a no-op that returns 0. This is THE critical one.\n\n19. No `FinalizeRound` function shown — called 32 times. Presumably a global reset. Multiple invocation could inflate counters, duplicate, etc.\n\n20. Missing check is_user_connected in SavePlayer for disconnect path; but client_disconnect implies connected.\n\n21. Bots: bot userids, saving bots' stats. Minor.\n\n22. plugin_end not defined. Also nvault module not opened.\n\nLet me quantify criticality:\n- g_Vault never opened: Critical/High — everything fails.\n- userid as persistent key: Critical/High — stats not tied to player, loss/duplication.\n- FinalizeRound in loop: High.\n- No save at plugin_end on map change: High.\n- deprecated client_disconnect: Medium.\n- sync nvault in loop (performance): Medium.\n- double save round end + disconnect: Low/Medium.\n- reset only in disconnect, not on putinserver: potential stale data carryover — actually g_PlayerStats is global and loaded on putinserver; if not reset and load fails, prior occupant data? Actually load sets it each putinserver, so stale is overwritten. But if nvault_get fails returns 0, overwritten. OK. However if SavePlayer called for a disconnected player... minor.\n\nAlso g_PlayerStats[id] = nvault_get — nvault_get returns 0 if not found; can't distinguish. Minor.\n\nAlso worth noting: `new g_Vault` default 0, nvault functions with invalid vault handle return 0 / fail silently (maybe log). \n\nLet me also mention: RoundEnd saves connected players but a player who joined mid-round gets stats. Fine.\n\nAnother: register_logevent with only \"Round_End\" — also Round_End fires; no TeamScore etc. Fine.\n\nOne more real bug: In `client_putinserver`, the stats are loaded but there's no check that g_PlayerStats was reset. Combined with g_PlayerStats[33] persisting across map change... Actually new map: plugin reloads → array zeroed. Players still connected don't trigger putinserver again → stats zero. Already covered.\n\nNow, do I need performance skill? The sync nvault write loop is storage/performance. AGENTS says read all relevant. Let me quickly read performance skill to be thorough and cite it.\n\nActually the instruction for this task: \"Ничего не исправляй и не пиши новый код.\" It's review. I should still name skills. Let me read performance since sync writes in loop concern. I'll do it.\n\nLet me also check STACK? Not needed; no version-specific.\n\nI'll read performance skill.",
+          "time": {
+            "start": 1790192525589,
+            "end": 1790192617533
+          }
+        },
+        {
+          "id": "prt_0cfcb883f0014gDrFySQStMk4E",
+          "sessionID": "ses_f303a7425ffenBqNmELcc4qttV",
+          "messageID": "msg_0cfc814d3002Hd6R4QeFlbSbx0",
+          "type": "text",
+          "text": "\n\n<｜DSML｜ calls>\n",
+          "time": {
+            "start": 1790192617535,
+            "end": 1790192619745
+          }
+        },
+        {
+          "id": "prt_0cfcb8b92001zcdZVKcv4vsNg3",
+          "sessionID": "ses_f303a7425ffenBqNmELcc4qttV",
+          "messageID": "msg_0cfc814d3002Hd6R4QeFlbSbx0",
+          "type": "tool",
+          "callID": "chatcmpl-tool-b35386df55c9eee5",
+          "tool": "skill",
+          "state": {
+            "status": "completed",
+            "input": {
+              "name": "performance"
+            },
+            "output": "<skill_content name=\"performance\">\n# Skill: performance\n\n# Стоимость форвардов, хуков и задач\n\nСтек: HLDS 8684, ReHLDS 3.15.0.896, ReGameDLL 5.30.0.814, Metamod-R 1.3.0.149, AMX Mod X 1.10.0.5484, ReAPI 5.29.0.358. Правила проверены на этих версиях. Если в папке сервера версии другие — сверяйся с её файлами, а не с этим текстом. Пометка в скобках у правила говорит, чем оно подтверждено; искать по ней ничего не нужно. Полная таблица проверок — в `references/evidence.md`.\n\n## Когда применять\n\n- подписка на форвард, хук или сообщение\n- задачи и отложенная работа\n- снятие подписок при выгрузке\n- разбор нагрузки на сервер от плагина\n\n## Когда не применять\n\n- прекэш\n- сущности и меню\n- хранение данных\n- безопасность\n- сборка\n\n## Жёсткие запреты\n\nНарушение любого пункта либо убивает сервер, либо тихо портит данные.\n\n1. **Не регистрировать горячий форвард «на всякий случай»** — Дорогие форварды: FM_AddToFullPack, FM_CmdStart, FM_PlayerPreThink, FM_PlayerPostThink, FM_UpdateClientData. *(доказательство: чтение исходников на пине)*\n2. **Внутри горячего форварда не делать строковых операций, чтения файлов и работы с меню** — Тяжёлое выносить в RequestFrame или в задачу, кроме вызовов precache_* — они только в plugin_precache. *(доказательство: чтение исходников на пине)*\n3. **Не ставить задачу с интервалом меньше 0,1 секунды** — Задачи идут с частотой 10 Гц, интервал поднимут до 0,1. *(доказательство: чтение исходников на пине)*\n4. **Задачи не плодить** — Каждый слот сканируется 10 раз в секунду, а удалённые слоты остаются в векторе. *(доказательство: чтение исходников на пине)*\n5. **Не предлагать несуществующие unregister_* для команд и событий** — У register_clcmd, register_concmd, register_srvcmd, register_menucmd, register_event, register_logevent, register_cvar и register_dictionary обратной функции в API нет. Либо плагин выгружается целиком, либо в обработчике стоит свой флаг. *(доказательство: чтение исходников на пине)*\n6. **Не пересоздавать задачу на каждое событие** — Использовать флаги повтора «a» и «b» и снимать задачу явно, когда она больше не нужна: одна долгоживущая задача дешевле сотни коротких. *(доказательство: чтение исходников на пине)*\n\n## Как делать правильно\n\n1. **Откладывать на следующий кадр через RequestFrame, а не через set_task(0.0)** — set_task(0.0) попадёт в тик 10 Гц. CFrameActionMngr выполняет ровно те заявки, которые были на начало кадра, поэтому заявка изнутри колбэка сработает на следующем кадре. *(доказательство: чтение исходников на пине)*\n2. **Снимать подписки при выгрузке** — Снять можно только пять регистраций: unregister_forward, unregister_message, unregister_impulse, unregister_touch, unregister_think. *(доказательство: чтение исходников на пине)*\n\n## Что проверять и помнить\n\n1. **Хук на функцию ставить только если слот свободен** — Если на ту же функцию уже подписан другой модуль, Fakemeta сохранит адрес оригинала и не подменит его. Конфликт двух модулей на одной функции надо проверять отдельно. *(доказательство: чтение исходников на пине; статус: открыто)*\n2. **Помнить, что цена форварда умножается на число подписавшихся плагинов** — Чем меньше подписчиков на горячую точку, тем лучше. *(доказательство: чтение исходников на пине)*\n3. **Помнить, что отдельных «стоимость всегда» хуков у AMXX нет** — И горячие хуки модуля engine, и хуки сообщений включаются только под конкретную подписку: цену создаёт плагин, а не платформа. *(доказательство: чтение исходников на пине)*\n\n## Открытые пункты\n\nПравила со статусом «Открыто» опираются на чтение кода, а не на замер. Пользоваться ими можно, но нельзя утверждать, что они проверены на живом сервере.\n\n## Проверка перед выдачей кода\n\n1. Сборка: `0 errors, 0 warnings`, `debug >= 1` (без `-d0`).\n2. Ни одно правило из раздела «Жёсткие запреты» не нарушено.\n3. У каждого правила, попавшего в код, есть источник в этом файле.\n\nBase directory for this skill: C:\\Users\\drono\\OneDrive\\Документы\\Default Project\\.agents\\skills\\performance\nRelative paths in this skill (e.g., scripts/, reference/) are relative to this base directory.\nNote: file list is sampled.\n\n<skill_files>\n<file>C:\\Users\\drono\\OneDrive\\Документы\\Default Project\\.agents\\skills\\performance\\references\\evidence.md</file>\n</skill_files>\n</skill_content>",
+            "title": "Loaded skill: performance",
+            "metadata": {
+              "name": "performance",
+              "dir": "C:\\Users\\drono\\OneDrive\\Документы\\Default Project\\.agents\\skills\\performance",
+              "truncated": false
+            },
+            "time": {
+              "start": 1790192619355,
+              "end": 1790192619378
+            }
+          }
+        },
+        {
+          "id": "prt_0cfcb912f001NSRjv9HZblw1n1",
+          "sessionID": "ses_f303a7425ffenBqNmELcc4qttV",
+          "messageID": "msg_0cfc814d3002Hd6R4QeFlbSbx0",
+          "type": "step-finish",
+          "reason": "tool-calls",
+          "snapshot": "2802a3164521b1ee80b0c634bb76a4e1ba12bc90",
+          "cost": 0,
+          "tokens": {
+            "total": 45428,
+            "input": 41100,
+            "output": 38,
+            "reasoning": 2306,
+            "cache": {
+              "read": 1984,
+              "write": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "id": "msg_0cfcb917f00231qCq4l66Sqi35",
+        "sessionID": "ses_f303a7425ffenBqNmELcc4qttV",
+        "role": "assistant",
+        "time": {
+          "created": 1790192619903,
+          "completed": 1790192855462
+        },
+        "parentID": "msg_0cfc58c040010Q01rfzCmzHKLO",
+        "modelID": "deepseek-ai/deepseek-v4.1-flash",
+        "providerID": "deepseek_",
+        "mode": "plan",
+        "agent": "plan",
+        "path": {
+          "cwd": "C:\\Users\\drono\\OneDrive\\Документы\\Default Project",
+          "root": "C:\\Users\\drono\\OneDrive\\Документы\\Default Project"
+        },
+        "cost": 0,
+        "tokens": {
+          "total": 48450,
+          "input": 44827,
+          "output": 1572,
+          "reasoning": 67,
+          "cache": {
+            "read": 1984,
+            "write": 0
+          }
+        },
+        "finish": "stop"
+      },
+      "parts": [
+        {
+          "id": "prt_0cfceb073001acG1CHd4cfM7TY",
+          "sessionID": "ses_f303a7425ffenBqNmELcc4qttV",
+          "messageID": "msg_0cfcb917f00231qCq4l66Sqi35",
+          "type": "step-start",
+          "snapshot": "2802a3164521b1ee80b0c634bb76a4e1ba12bc90"
+        },
+        {
+          "id": "prt_0cfceb0740015JG4clT4m6Gu4z",
+          "sessionID": "ses_f303a7425ffenBqNmELcc4qttV",
+          "messageID": "msg_0cfcb917f00231qCq4l66Sqi35",
+          "type": "reasoning",
+          "text": "Now produce the review. First line: names of skills read. No code changes. Plan mode — read-only, but this is analysis, no plan to execute. I'll present the review as the answer.\n\nLet me write in Russian since the user wrote in Russian.\n\nList problems with criticality.\n\nLet me be thorough but concise.",
+          "time": {
+            "start": 1790192824436,
+            "end": 1790192825842
+          }
+        },
+        {
+          "id": "prt_0cfceb5f3001RKyWf3rh3lBwuq",
+          "sessionID": "ses_f303a7425ffenBqNmELcc4qttV",
+          "messageID": "msg_0cfcb917f00231qCq4l66Sqi35",
+          "type": "text",
+          "text": "Прочитанные скиллы: `cs16-router`, `storage`, `lifecycle-and-entities`, `amxx-api`, `performance`.\n\nРазбор фрагмента (только анализ, код не меняется):\n\n## 1. Vault не открыт\n- **Ошибка:** `g_Vault` инициализирован нулём; нигде нет `nvault_open`, который бы вернул валидный хендл.\n- **Почему:** все вызовы `nvault_get`/`nvault_set` идут с нулевым хендлом и молча возвращают 0 / ничего не пишут. Итог — статистика вообще не сохраняется и не читается, при этом сервер не падает, поэтому баг тихий.\n- **Критичность:** высокая.\n\n## 2. Ключ по `get_user_userid` — не личность игрока\n- **Ошибка:** и чтение, и запись идут по `fmt(\"%d\", get_user_userid(id))`.\n- **Почему:** `userid` — это идентификатор *сессии подключения*, а не игрока (не SteamID/authid). Он выдаётся движком на соединение и не переживает переподключение/смену карты. Игрок вышел и зашёл — новый `userid`, старые данные остались в осиротевшем ключе, а ему читается 0. Плюс возможны совпадения/переиспользование ключей между разными людьми. Это и «потеря», и «чужие данные». Скилл `storage`, правило про проверку ключей, и `lifecycle` п.1 (номер/индекс — не личность).\n- **Критичность:** высокая.\n\n## 3. `FinalizeRound()` вызывается 32 раза\n- **Ошибка:** вызов стоит внутри цикла `for (id = 1; id <= 32; id++)`.\n- **Почему:** вместо одного «завершить раунд» после цикла он выполняется каждую итерацию — до 32 раз за раунд (даже для несвязанных id). Любая агрегация/сброс внутри `FinalizeRound` будет дублироваться и множить статистику.\n- **Критичность:** высокая.\n\n## 4. Нет сохранения на смену карты (`plugin_end`)\n- **Ошибка:** состояние сохраняется только в `RoundEnd` и `client_disconnect`; `plugin_end` отсутствует.\n- **Почему:** при смене карты плагин выгружается/перезагружается, массив `g_PlayerStats` обнуляется, а `client_putinserver` для оставшихся игроков заново не вызывается. Данные, накопленные после последнего конца раунда, теряются. Скилл `lifecycle` п.4: всё, что должно пережить карту, сохранять до `plugin_end`.\n- **Критичность:** высокая.\n\n## 5. Использован deprecated `client_disconnect`\n- **Ошибка:** форвард назван `client_disconnect`.\n- **Почему:** в AMXX 1.10.0.5484 это объявление помечено `#pragma deprecated`; заменяется на `client_disconnected`. Компилятор даёт предупреждение, но не ошибку, поэтому проблема тихо живёт в коде. Скилл `amxx-api`, таблица п.1.\n- **Критичность:** средняя.\n\n## 6. Данные читаются не в том форварде\n- **Ошибка:** `get_user_userid` и запись выполняются в `client_disconnect`, который срабатывает до `client_remove`.\n- **Почему:** по скиллу `lifecycle` п.2 данные игрока надо читать в `client_disconnected`; к моменту `client_remove` слот уже очищен. Здесь риск, что `userid`/состояние уже не того качества, чем ожидается, и запись уйдёт по мусорному ключу (в т.ч. «0»), испортив запись.\n- **Критичность:** средняя.\n\n## 7. Синхронные записи nvault в цикле на каждом Round_End\n- **Ошибка:** `SavePlayer` вызывает синхронный `nvault_set` до 32 раз подряд в конце каждого раунда, плюс на каждый дисконнект.\n- **Почему:** nvault — блокирующий файловый ввод-вывод на главном потоке; запись серии ключей на каждом конце раунда даёт микро-фризы. Скилл `performance` (тяжёлые операции не в горячих путях) и `storage` (синхронно — только мелкое при старте).\n- **Критичность:** средняя.\n\n## 8. Двойное сохранение\n- **Ошибка:** вышедший в раунде игрок сохраняется и в `client_disconnect`, и снова в `RoundEnd` (если снова подключился/или для подключённых).\n- **Почему:** лишняя запись того же значения; не разрушительно, но является источником лишней нагрузки и потенциальных гонок, если между двумя записями значение изменилось.\n- **Критичность:** низкая.\n\n## 9. `nvault_get` не отличает «0» от «нет записи»\n- **Ошибка:** `g_PlayerStats[id] = nvault_get(...)` без проверки наличия ключа.\n- **Почему:** отсутствие записи и легитимный ноль неразличимы; для числовой статистики это обычно терпимо, но при первой загрузке маскирует проблемы с ключами (см. п.1–2).\n- **Критичность:** низкая.\n\n## 10. Сброс только в дисконнекте, без явного сброса при входе\n- **Ошибка:** массив сбрасывается лишь в `client_disconnect`.\n- **Почему:** при переиспользовании слота движком данные прошлого владельца могут пережить одного игрока. Здесь спасает то, что `client_putinserver` перезаписывает значение, — но это защита «по совпадению», а не по правилу `lifecycle` п.1/п.6 (сбрасывать состояние в `client_disconnected` и проверять перед использованием).\n- **Критичность:** низкая.\n\n**Итого:** пункты 1–4 — блокирующие для корректной статистики (тихие потери и дублирование). Пункты 5–7 — корректность/нагрузка. Пункты 8–10 — второстепенные.",
+          "time": {
+            "start": 1790192825843,
+            "end": 1790192855290
+          }
+        },
+        {
+          "id": "prt_0cfcf29500018BdeOotoLSVQ3g",
+          "sessionID": "ses_f303a7425ffenBqNmELcc4qttV",
+          "messageID": "msg_0cfcb917f00231qCq4l66Sqi35",
+          "type": "step-finish",
+          "reason": "stop",
+          "snapshot": "2802a3164521b1ee80b0c634bb76a4e1ba12bc90",
+          "cost": 0,
+          "tokens": {
+            "total": 48450,
+            "input": 44827,
+            "output": 1572,
+            "reasoning": 67,
+            "cache": {
+              "read": 1984,
+              "write": 0
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
